@@ -1,0 +1,2496 @@
+<!DOCTYPE html>
+<html lang="km">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Decision Analysis – សាកលវិទ្យាល័យភូមិន្ទភ្នំពេញ</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Noto+Serif+Khmer:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #F0D070;
+      --gold-dark: #8A6820;
+      --navy: #0B1A35;
+      --navy-mid: #122244;
+      --navy-light: #1A3060;
+      --teal: #1A6B7C;
+      --teal-light: #2A9DB5;
+      --cream: #F5EDD8;
+      --white: #FDFAF2;
+      --text: #1a1208;
+      --muted: #6b5c3a;
+      --highlight: #E8C84A;
+      --red: #c0392b;
+      --green: #1a6b3a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--navy);
+      color: var(--cream);
+      font-family: 'Crimson Text', 'Noto Serif Khmer', serif;
+      overflow-x: hidden;
+    }
+
+    /* ═══════════════════════════════ PARTICLES BG */
+    #particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--gold-light), transparent);
+      animation: float-particle linear infinite;
+      opacity: 0;
+    }
+
+    @keyframes float-particle {
+      0% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 0.4;
+      }
+
+      90% {
+        opacity: 0.15;
+      }
+
+      100% {
+        transform: translateY(-10vh) scale(1);
+        opacity: 0;
+      }
+    }
+
+    /* ═══════════════════════════════ HERO */
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201, 168, 76, 0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 80% at 20% 100%, rgba(26, 107, 124, 0.2) 0%, transparent 60%),
+        linear-gradient(180deg, #070f20 0%, #0B1A35 50%, #0d1e3a 100%);
+      padding: 60px 24px 80px;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(201, 168, 76, 0.04) 60px),
+        repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(201, 168, 76, 0.04) 60px);
+      pointer-events: none;
+    }
+
+    .angkor-silhouette {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 200px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 200'%3E%3Cpath fill='%23071428' d='M0,200 L0,140 L50,140 L50,100 L70,100 L70,60 L80,60 L80,40 L90,40 L90,30 L100,30 L100,20 L110,20 L110,30 L120,30 L120,40 L130,40 L130,60 L140,60 L140,100 L160,100 L160,140 L200,140 L200,120 L230,120 L230,90 L250,90 L250,70 L265,70 L265,50 L275,50 L275,35 L285,35 L285,25 L295,25 L295,35 L305,35 L305,50 L315,50 L315,70 L330,70 L330,90 L350,90 L350,120 L380,120 L380,140 L420,140 L420,100 L440,100 L440,60 L455,60 L455,40 L465,40 L465,25 L475,25 L475,15 L485,15 L485,8 L495,8 L495,15 L505,15 L505,25 L515,25 L515,40 L525,40 L525,60 L540,60 L540,100 L560,100 L560,140 L600,140 L600,120 L630,120 L630,90 L650,90 L650,70 L665,70 L665,50 L675,50 L675,35 L685,35 L685,25 L695,25 L695,35 L705,35 L705,50 L715,50 L715,70 L730,70 L730,90 L750,90 L750,120 L780,120 L780,140 L820,140 L820,100 L840,100 L840,60 L855,60 L855,40 L865,40 L865,25 L875,25 L875,15 L885,15 L885,8 L895,8 L895,15 L905,15 L905,25 L915,25 L915,40 L925,40 L925,60 L940,60 L940,100 L960,100 L960,140 L1000,140 L1000,120 L1030,120 L1030,90 L1050,90 L1050,70 L1065,70 L1065,50 L1075,50 L1075,35 L1085,35 L1085,25 L1095,25 L1095,35 L1105,35 L1105,50 L1115,50 L1115,70 L1130,70 L1130,90 L1150,90 L1150,120 L1200,120 L1200,200 Z'/%3E%3C/svg%3E") no-repeat bottom center / cover;
+      opacity: 0.8;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid rgba(201, 168, 76, 0.4);
+      border-radius: 40px;
+      padding: 8px 22px;
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: rgba(201, 168, 76, 0.07);
+      margin-bottom: 32px;
+      animation: fadeInDown 1s ease both;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      animation: pulse 2s ease infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1)
+      }
+
+      50% {
+        opacity: 0.4;
+        transform: scale(1.5)
+      }
+    }
+
+    .hero-uni {
+      font-family: 'Noto Serif Khmer', serif;
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+      animation: fadeInDown 1s 0.2s ease both;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 900;
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 20px;
+      animation: fadeInUp 1s 0.4s ease both;
+      text-shadow: 0 4px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .hero-title .accent {
+      color: var(--gold);
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: rgba(245, 237, 216, 0.7);
+      max-width: 640px;
+      line-height: 1.7;
+      margin: 0 auto 40px;
+      animation: fadeInUp 1s 0.6s ease both;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeInUp 1s 0.8s ease both;
+    }
+
+    .hero-meta-item {
+      text-align: center;
+      padding: 16px 24px;
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      border-radius: 12px;
+      background: rgba(201, 168, 76, 0.05);
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-meta-item .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold);
+      display: block;
+    }
+
+    .hero-meta-item .lbl {
+      font-size: 0.8rem;
+      color: rgba(245, 237, 216, 0.6);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 120px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      animation: fadeInUp 1s 1.2s ease both;
+      color: rgba(245, 237, 216, 0.4);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+    }
+
+    .scroll-arrow {
+      width: 20px;
+      height: 20px;
+      border-right: 2px solid var(--gold);
+      border-bottom: 2px solid var(--gold);
+      transform: rotate(45deg);
+      animation: bounce 1.5s ease infinite;
+    }
+
+    @keyframes bounce {
+
+      0%,
+      100% {
+        transform: rotate(45deg) translateY(0)
+      }
+
+      50% {
+        transform: rotate(45deg) translateY(6px)
+      }
+    }
+
+    /* ═══════════════════════════════ NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7, 15, 32, 0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      overflow-x: auto;
+    }
+
+    nav a {
+      display: block;
+      padding: 18px 20px;
+      color: rgba(245, 237, 216, 0.6);
+      text-decoration: none;
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: color 0.3s, border-bottom 0.3s;
+      border-bottom: 2px solid transparent;
+    }
+
+    nav a:hover {
+      color: var(--gold);
+      border-bottom-color: var(--gold);
+    }
+
+    /* ═══════════════════════════════ SECTIONS */
+    .section {
+      position: relative;
+      z-index: 1;
+      padding: 80px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+
+    .section-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      font-weight: 900;
+      color: rgba(201, 168, 76, 0.15);
+      line-height: 1;
+      flex-shrink: 0;
+      min-width: 80px;
+    }
+
+    .section-info {}
+
+    .section-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(201, 168, 76, 0.3);
+      padding: 3px 12px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.3), transparent);
+      margin: 0;
+    }
+
+    /* ═══════════════════════════════ PROBLEM BOX */
+    .problem-box {
+      background: rgba(26, 48, 96, 0.4);
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      border-left: 4px solid var(--gold);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-bottom: 32px;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--cream);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .problem-box::before {
+      content: '"';
+      position: absolute;
+      top: -10px;
+      left: 16px;
+      font-family: 'Playfair Display', serif;
+      font-size: 8rem;
+      color: rgba(201, 168, 76, 0.06);
+      line-height: 1;
+    }
+
+    /* ═══════════════════════════════ TABLES */
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 16px;
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      margin-bottom: 28px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      background: rgba(11, 26, 53, 0.8);
+    }
+
+    thead tr {
+      background: linear-gradient(135deg, rgba(201, 168, 76, 0.2), rgba(201, 168, 76, 0.05));
+    }
+
+    thead th {
+      padding: 14px 18px;
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.25);
+      font-weight: 600;
+    }
+
+    tbody tr {
+      transition: background 0.2s;
+      border-bottom: 1px solid rgba(201, 168, 76, 0.08);
+    }
+
+    tbody tr:hover {
+      background: rgba(201, 168, 76, 0.06);
+    }
+
+    tbody td {
+      padding: 12px 18px;
+      text-align: center;
+      color: var(--cream);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88rem;
+    }
+
+    tbody td:first-child {
+      text-align: left;
+      font-family: 'Crimson Text', serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .highlight-cell {
+      background: rgba(201, 168, 76, 0.2) !important;
+      color: var(--gold-light) !important;
+      font-weight: 700;
+    }
+
+    .neg {
+      color: #ff7070 !important;
+    }
+
+    .pos {
+      color: #7de08a !important;
+    }
+
+    /* ═══════════════════════════════ ANSWER BOXES */
+    .answer-grid {
+      display: grid;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .answer-card {
+      background: linear-gradient(135deg, rgba(26, 107, 124, 0.15), rgba(11, 26, 53, 0.6));
+      border: 1px solid rgba(42, 157, 181, 0.25);
+      border-radius: 12px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      animation: revealCard 0.5s ease both;
+    }
+
+    @keyframes revealCard {
+      from {
+        opacity: 0;
+        transform: translateX(-20px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    .answer-letter {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: var(--navy);
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .answer-content {
+      flex: 1;
+    }
+
+    .answer-q {
+      font-size: 0.85rem;
+      color: rgba(245, 237, 216, 0.6);
+      margin-bottom: 4px;
+    }
+
+    .answer-v {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--gold-light);
+    }
+
+    /* ═══════════════════════════════ FORMULA */
+    .formula-box {
+      background: rgba(7, 15, 32, 0.7);
+      border: 1px solid rgba(201, 168, 76, 0.15);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem;
+      color: var(--cream);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      overflow-x: auto;
+    }
+
+    .formula-label {
+      font-family: 'Crimson Text', serif;
+      font-size: 0.8rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    /* ═══════════════════════════════ EMV CARDS */
+    .emv-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .emv-card {
+      background: rgba(26, 48, 96, 0.5);
+      border: 1px solid rgba(201, 168, 76, 0.15);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .emv-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(201, 168, 76, 0.4);
+    }
+
+    .emv-card.best {
+      border-color: var(--gold);
+      background: rgba(201, 168, 76, 0.12);
+    }
+
+    .emv-card .label {
+      font-size: 0.8rem;
+      color: rgba(245, 237, 216, 0.55);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .emv-card .value {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .emv-card .sub {
+      font-size: 0.78rem;
+      color: rgba(245, 237, 216, 0.5);
+      margin-top: 4px;
+    }
+
+    .emv-card.best .value {
+      color: var(--gold-light);
+    }
+
+    .best-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: var(--gold);
+      color: var(--navy);
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-top: 6px;
+      font-weight: 700;
+    }
+
+    /* ═══════════════════════════════ CONCLUSION */
+    .conclusion {
+      background: linear-gradient(135deg, rgba(201, 168, 76, 0.12), rgba(201, 168, 76, 0.04));
+      border: 1px solid rgba(201, 168, 76, 0.35);
+      border-radius: 12px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 24px 0;
+    }
+
+    .conclusion-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .conclusion-text {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .conclusion-text strong {
+      color: var(--gold-light);
+    }
+
+    /* ═══════════════════════════════ PAYOFF CALCS */
+    .calc-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 16px 0;
+    }
+
+    .calc-item {
+      background: rgba(7, 15, 32, 0.5);
+      border-left: 3px solid var(--teal-light);
+      padding: 10px 16px;
+      border-radius: 0 8px 8px 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+
+    .calc-item .label {
+      color: var(--gold);
+      display: block;
+      font-family: 'Crimson Text', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      margin-bottom: 3px;
+    }
+
+    /* ═══════════════════════════════ ACKNOWLEDGEMENT */
+    .ack-section {
+      background:
+        radial-gradient(ellipse 80% 50% at 50% 50%, rgba(201, 168, 76, 0.07) 0%, transparent 70%),
+        rgba(7, 15, 32, 0.9);
+      border-top: 1px solid rgba(201, 168, 76, 0.15);
+      padding: 80px 24px;
+      text-align: center;
+    }
+
+    .ack-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      color: var(--gold);
+      margin-bottom: 32px;
+    }
+
+    .ack-text {
+      max-width: 760px;
+      margin: 0 auto 32px;
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: rgba(245, 237, 216, 0.8);
+    }
+
+    .ack-text .km {
+      font-family: 'Noto Serif Khmer', serif;
+      font-size: 1rem;
+    }
+
+    .members-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+      max-width: 800px;
+      margin: 32px auto;
+    }
+
+    .member-card {
+      background: rgba(26, 48, 96, 0.4);
+      border: 1px solid rgba(201, 168, 76, 0.15);
+      border-radius: 12px;
+      padding: 16px 12px;
+      text-align: center;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .member-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(201, 168, 76, 0.4);
+    }
+
+    .member-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: rgba(201, 168, 76, 0.3);
+      margin-bottom: 6px;
+    }
+
+    .member-name {
+      font-family: 'Noto Serif Khmer', serif;
+      font-size: 0.88rem;
+      color: var(--cream);
+      font-weight: 600;
+    }
+
+    .date-badge {
+      display: inline-block;
+      background: rgba(201, 168, 76, 0.1);
+      border: 1px solid rgba(201, 168, 76, 0.25);
+      padding: 10px 24px;
+      border-radius: 30px;
+      font-size: 0.88rem;
+      color: var(--gold);
+      margin-top: 24px;
+      font-family: 'Noto Serif Khmer', serif;
+    }
+
+    /* ═══════════════════════════════ TREE DIAGRAM */
+    .tree-container {
+      overflow-x: auto;
+      padding: 20px 0;
+      margin: 20px 0;
+    }
+
+    .tree-svg {
+      min-width: 600px;
+    }
+
+    /* ═══════════════════════════════ ANIMATE IN */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    /* ═══════════════════════════════ SECTION BG ALTERNATION */
+    .bg-alt {
+      background: rgba(26, 48, 96, 0.08);
+    }
+
+    .bg-dark {
+      background: rgba(7, 15, 32, 0.5);
+    }
+
+    .full-width-section {
+      padding: 60px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .full-width-section .section {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    /* ═══════════════════════════════ STEP LABEL */
+    .step-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      margin: 24px 0 12px;
+    }
+
+    .step-label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--gold);
+    }
+
+    /* ═══════════════════════════════ RESPONSIVE */
+    @media(max-width:600px) {
+      nav {
+        padding: 0 12px;
+      }
+
+      nav a {
+        padding: 14px 12px;
+        font-size: 0.72rem;
+      }
+
+      .section {
+        padding: 48px 16px;
+      }
+
+      .problem-box {
+        padding: 20px;
+      }
+
+      thead th,
+      tbody td {
+        padding: 10px 10px;
+        font-size: 0.8rem;
+      }
+    }
+
+    /* progress bar */
+    #progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: var(--gold);
+      z-index: 200;
+      transition: width 0.1s;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="progress"></div>
+
+  <!-- Particles -->
+  <div id="particles"></div>
+
+  <!-- ══════════════════════════════════════════════════════════ HERO -->
+  <header class="hero">
+    <div class="angkor-silhouette"></div>
+    <div class="badge"><span class="badge-dot"></span>សាកលវិទ្យាល័យភូមិន្ទភ្នំពេញ<span class="badge-dot"></span></div>
+    <p class="hero-uni">ឆ្នាំសិក្សា ២០២៥–២០២៦ · ឆមាសទី ២ · ឆ្នាំទី ៣ · ជំនាន់ទី ២៧</p>
+    <h1 class="hero-title"><span class="accent">Decision</span><br>Analysis</h1>
+    <p class="hero-subtitle">ការវិភាគការសម្រេចចិត្ត — Maximax · Maximin · Equally Likely · Minimax Regret · EMV · EOL ·
+      EVPI</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><span class="num">7</span><span class="lbl">Exercises</span></div>
+      <div class="hero-meta-item"><span class="num">EMV</span><span class="lbl">Method</span></div>
+      <div class="hero-meta-item"><span class="num">EOL</span><span class="lbl">Method</span></div>
+      <div class="hero-meta-item"><span class="num">EVPI</span><span class="lbl">Analysis</span></div>
+    </div>
+    <div class="scroll-hint">SCROLL<div class="scroll-arrow"></div>
+    </div>
+  </header>
+
+  <!-- Nav -->
+  <nav>
+    <a href="#ex324">3.24</a>
+    <a href="#ex325">3.25</a>
+    <a href="#ex330">3.30</a>
+    <a href="#ex221">22.1</a>
+    <a href="#ex222">22.2</a>
+    <a href="#ex223">22.3</a>
+    <a href="#ex224">22.4</a>
+    <a href="#ex225">22.5</a>
+    <a href="#ex226">22.6</a>
+    <a href="#ex227">22.7</a>
+    <a href="#ack">អំណរគុណ</a>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════════════════ 3.24 -->
+  <div class="full-width-section" id="ex324">
+    <div class="section reveal">
+      <div class="section-header">
+        <div class="section-num">3.24</div>
+        <div class="section-info">
+          <span class="section-tag">Decision Analysis</span>
+          <h2 class="section-title">Today's Electronics — Facility Decision</h2>
+        </div>
+      </div>
+
+      <div class="problem-box">
+        Today's Electronics specializes in manufacturing modern electronic components. It also builds the equipment that
+        produces the components. Phyllis Weinberger, who is responsible for advising the president of Today's
+        Electronics on electronic manufacturing equipment, has developed the following table concerning a proposed
+        facility.
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Alternative</th>
+              <th>Strong Market ($)</th>
+              <th>Fair Market ($)</th>
+              <th>Poor Market ($)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Large facility</td>
+              <td>550,000</td>
+              <td>110,000</td>
+              <td class="neg">−310,000</td>
+            </tr>
+            <tr>
+              <td>Medium-sized facility</td>
+              <td>300,000</td>
+              <td>129,000</td>
+              <td class="neg">−100,000</td>
+            </tr>
+            <tr>
+              <td>Small facility</td>
+              <td>200,000</td>
+              <td>100,000</td>
+              <td class="neg">−32,000</td>
+            </tr>
+            <tr>
+              <td>No facility</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- a) Maximax -->
+      <div class="step-label">a) Maximax Decision</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Alternative</th>
+              <th>Strong Market ($)</th>
+              <th>Fair Market ($)</th>
+              <th>Poor Market ($)</th>
+              <th>Maximum in Row ($)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Large facility</td>
+              <td>550,000</td>
+              <td>110,000</td>
+              <td class="neg">−310,000</td>
+              <td class="highlight-cell">550,000</td>
+            </tr>
+            <tr>
+              <td>Medium-sized facility</td>
+              <td>300,000</td>
+              <td>129,000</td>
+              <td class="neg">−100,000</td>
+              <td>300,000</td>
+            </tr>
+            <tr>
+              <td>Small facility</td>
+              <td>200,000</td>
+              <td>100,000</td>
+              <td class="neg">−32,000</td>
+              <td>200,000</td>
+            </tr>
+            <tr>
+              <td>No facility</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="conclusion"><span class="conclusion-icon">🏆</span>
+        <div class="conclusion-text">So, the <strong>maximax decision</strong> is <strong>$550,000</strong> →
+          <strong>Large facility</strong>.
+        </div>
+      </div>
+
+      <!-- b) Maximin -->
+      <div class="step-label">b) Maximin Decision</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Alternative</th>
+              <th>Strong Market ($)</th>
+              <th>Fair Market ($)</th>
+              <th>Poor Market ($)</th>
+              <th>Minimum in Row ($)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Large facility</td>
+              <td>550,000</td>
+              <td>110,000</td>
+              <td class="neg">−310,000</td>
+              <td class="neg">−310,000</td>
+            </tr>
+            <tr>
+              <td>Medium-sized facility</td>
+              <td>300,000</td>
+              <td>129,000</td>
+              <td class="neg">−100,000</td>
+              <td class="neg">−100,000</td>
+            </tr>
+            <tr>
+              <td>Small facility</td>
+              <td>200,000</td>
+              <td>100,000</td>
+              <td class="neg">−32,000</td>
+              <td class="neg">−32,000</td>
+            </tr>
+            <tr>
+              <td>No facility</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td class="highlight-cell">0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="conclusion"><span class="conclusion-icon">🛡️</span>
+        <div class="conclusion-text">So, the <strong>maximin decision</strong> is <strong>No facility</strong> (maximum
+          of the minimums = $0).</div>
+      </div>
+
+      <!-- c) Equally Likely -->
+      <div class="step-label">c) Equally Likely Decision</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Alternative</th>
+              <th>Strong Market ($)</th>
+              <th>Fair Market ($)</th>
+              <th>Poor Market ($)</th>
+              <th>Row Average ($)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Large facility</td>
+              <td>550,000</td>
+              <td>110,000</td>
+              <td class="neg">−310,000</td>
+              <td class="highlight-cell">116,666.67</td>
+            </tr>
+            <tr>
+              <td>Medium-sized facility</td>
+              <td>300,000</td>
+              <td>129,000</td>
+              <td class="neg">−100,000</td>
+              <td>109,666.67</td>
+            </tr>
+            <tr>
+              <td>Small facility</td>
+              <td>200,000</td>
+              <td>100,000</td>
+              <td class="neg">−32,000</td>
+              <td>89,333.33</td>
+            </tr>
+            <tr>
+              <td>No facility</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="conclusion"><span class="conclusion-icon">⚖️</span>
+        <div class="conclusion-text">So, the <strong>equally likely decision</strong> is <strong>Large facility</strong>
+          (highest average = $116,666.67).</div>
+      </div>
+
+      <!-- d) Minimax Regret -->
+      <div class="step-label">d) Minimax Regret Decision</div>
+      <p style="color:rgba(245,237,216,0.65);font-size:0.92rem;margin-bottom:12px;">Regret = Best in column − Actual
+        payoff</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Alternative</th>
+              <th>Strong Market</th>
+              <th>Fair Market</th>
+              <th>Poor Market</th>
+              <th>Max Regret</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Large facility</td>
+              <td>550,000−550,000 = 0</td>
+              <td>129,000−110,000 = 19,000</td>
+              <td>0−(−310,000) = 310,000</td>
+              <td>310,000</td>
+            </tr>
+            <tr>
+              <td>Medium-sized facility</td>
+              <td>550,000−300,000 = 250,000</td>
+              <td>129,000−129,000 = 0</td>
+              <td>0−(−100,000) = 100,000</td>
+              <td class="highlight-cell">250,000</td>
+            </tr>
+            <tr>
+              <td>Small facility</td>
+              <td>550,000−200,000 = 350,000</td>
+              <td>129,000−100,000 = 29,000</td>
+              <td>0−(−32,000) = 32,000</td>
+              <td>350,000</td>
+            </tr>
+            <tr>
+              <td>No facility</td>
+              <td>550,000−0 = 550,000</td>
+              <td>129,000−0 = 129,000</td>
+              <td>0−0 = 0</td>
+              <td>550,000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="conclusion"><span class="conclusion-icon">🎯</span>
+        <div class="conclusion-text">So, the <strong>minimax regret decision</strong> is <strong>Medium-sized
+            facility</strong> (minimum of the maximum regrets = $250,000).</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════════════════════════ 3.25 -->
+  <div class="full-width-section bg-alt" id="ex325">
+    <div class="section reveal">
+      <div class="section-header">
+        <div class="section-num">3.25</div>
+        <div class="section-info">
+          <span class="section-tag">Inventory Decision</span>
+          <h2 class="section-title">Brilliant Color — BC-6 Chemical Stocking</h2>
+        </div>
+      </div>
+
+      <div class="problem-box">
+        Brilliant Color is a small supplier of chemicals and equipment used by photographic stores to process 35mm film.
+        John Kubick normally stocks 11, 12, or 13 cases of BC-6 each week. Each case sold yields a profit of
+        <strong>$35</strong>. If not sold, each case is discarded at a loss of <strong>$56</strong>. Probabilities:
+        P(sell 11) = 0.45, P(sell 12) = 0.35, P(sell 13) = 0.20.
+      </div>
+
+      <div class="step-label">a) Decision Table — Payoff Calculations</div>
+      <p style="color:rgba(245,237,216,0.65);font-size:0.9rem;margin-bottom:12px;">If Demand ≥ Stock: Payoff = Stock ×
+        35 &nbsp;|&nbsp; If Demand &lt; Stock: Payoff = (Demand×35) − [(Stock−Demand)×56]</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Stock \ Demand</th>
+              <th>Demand 11 (P=0.45)</th>
+              <th>Demand 12 (P=0.35)</th>
+              <th>Demand 13 (P=0.20)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Stock 11</td>
+              <td class="pos">$385</td>
+              <td class="pos">$385</td>
+              <td class="pos">$385</td>
+            </tr>
+            <tr>
+              <td>Stock 12</td>
+              <td class="neg">$329</td>
+              <td class="pos">$420</td>
+              <td class="pos">$420</td>
+            </tr>
+            <tr>
+              <td>Stock 13</td>
+              <td class="neg">$273</td>
+              <td class="neg">$364</td>
+              <td class="pos">$455</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="step-label">b) Recommended Course of Action — EMV</div>
+      <div class="formula-box"><span class="formula-label">Formula</span>EMV = Σ (Payoff × Probability)</div>
+      <div class="emv-grid">
+        <div class="emv-card best">
+          <div class="label">Stock 11</div>
+          <div class="value">$385</div>
+          <div class="sub">(385×0.45)+(385×0.35)+(385×0.20)</div>
+          <div class="best-badge">✓ BEST</div>
+        </div>
+        <div class="emv-card">
+          <div class="label">Stock 12</div>
+          <div class="value">$379.05</div>
+          <div class="sub">(329×0.45)+(420×0.35)+(420×0.20)</div>
+        </div>
+        <div class="emv-card">
+          <div class="label">Stock 13</div>
+          <div class="value">$341.25</div>
+          <div class="sub">(273×0.45)+(364×0.35)+(455×0.20)</div>
+        </div>
+      </div>
+      <div class="conclusion"><span class="conclusion-icon">📦</span>
+        <div class="conclusion-text"><strong>Recommendation:</strong> John should stock <strong>11 cases</strong> each
+          week, as it yields the highest expected profit of <strong>$385</strong>.</div>
+      </div>
+
+      <div class="step-label">c) Impact of Stabilizing Ingredient</div>
+      <div class="problem-box" style="border-left-color:var(--teal-light);">
+        If BC-6 no longer has to be discarded, the $56 loss penalty for overstocking is removed. Unsold cases simply
+        remain in inventory for the following week.
+      </div>
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">EMV (Stock 11)</span> = $385 (same as before — demand always at least
+          11)</div>
+        <div class="calc-item"><span class="label">EMV (Stock 12)</span> = (11×35×0.45) + (12×35×0.35) + (12×35×0.20) =
+          <strong>$404.25</strong>
+        </div>
+        <div class="calc-item"><span class="label">EMV (Stock 13)</span> = (11×35×0.45) + (12×35×0.35) + (13×35×0.20) =
+          <strong>$411.25</strong> ← Best
+        </div>
+      </div>
+      <div class="conclusion"><span class="conclusion-icon">🔬</span>
+        <div class="conclusion-text"><strong>New Recommendation:</strong> If the product is stabilized, John should
+          stock <strong>13 cases</strong>. Without the risk of discard losses, the optimal strategy shifts toward
+          stocking the maximum possible demand to ensure no potential sales and the $35 profit per case are missed.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════════════════════════ 3.30 -->
+  <div class="full-width-section" id="ex330">
+    <div class="section reveal">
+      <div class="section-header">
+        <div class="section-num">3.30</div>
+        <div class="section-info">
+          <span class="section-tag">Station Size Decision</span>
+          <h2 class="section-title">Susan Solomon — Gasoline Station</h2>
+        </div>
+      </div>
+
+      <div class="problem-box">
+        Even though independent gasoline stations have been having a difficult time, Susan Solomon has been thinking
+        about starting her own independent gasoline station. Susan's problem is to decide how large her station should
+        be. The annual returns will depend on both the size of her station and a number of marketing factors related to
+        the oil industry and demand for gasoline.
+      </div>
+
+      <div class="step-label">a) Decision Table</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Size of Station</th>
+              <th>Good Market ($)</th>
+              <th>Fair Market ($)</th>
+              <th>Poor Market ($)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Small</td>
+              <td class="pos">50,000</td>
+              <td class="pos">20,000</td>
+              <td class="neg">−10,000</td>
+            </tr>
+            <tr>
+              <td>Medium</td>
+              <td class="pos">80,000</td>
+              <td class="pos">30,000</td>
+              <td class="neg">−20,000</td>
+            </tr>
+            <tr>
+              <td>Large</td>
+              <td class="pos">100,000</td>
+              <td class="pos">30,000</td>
+              <td class="neg">−40,000</td>
+            </tr>
+            <tr>
+              <td>Very large</td>
+              <td class="pos">300,000</td>
+              <td class="pos">25,000</td>
+              <td class="neg">−160,000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="step-label">b) Maximax Decision</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Size</th>
+              <th>Good ($)</th>
+              <th>Fair ($)</th>
+              <th>Poor ($)</th>
+              <th>Maximum in Row</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Small</td>
+              <td>50,000</td>
+              <td>20,000</td>
+              <td class="neg">−10,000</td>
+              <td>50,000</td>
+            </tr>
+            <tr>
+              <td>Medium</td>
+              <td>80,000</td>
+              <td>30,000</td>
+              <td class="neg">−20,000</td>
+              <td>80,000</td>
+            </tr>
+            <tr>
+              <td>Large</td>
+              <td>100,000</td>
+              <td>30,000</td>
+              <td class="neg">−40,000</td>
+              <td>100,000</td>
+            </tr>
+            <tr>
+              <td>Very large</td>
+              <td>300,000</td>
+              <td>25,000</td>
+              <td class="neg">−160,000</td>
+              <td class="highlight-cell">300,000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="conclusion"><span class="conclusion-icon">🏆</span>
+        <div class="conclusion-text"><strong>Maximax decision = Very large station</strong> ($300,000)</div>
+      </div>
+
+      <div class="step-label">c) Maximin Decision</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Size</th>
+              <th>Good ($)</th>
+              <th>Fair ($)</th>
+              <th>Poor ($)</th>
+              <th>Minimum in Row</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Small</td>
+              <td>50,000</td>
+              <td>20,000</td>
+              <td class="neg">−10,000</td>
+              <td class="highlight-cell neg">−10,000</td>
+            </tr>
+            <tr>
+              <td>Medium</td>
+              <td>80,000</td>
+              <td>30,000</td>
+              <td class="neg">−20,000</td>
+              <td class="neg">−20,000</td>
+            </tr>
+            <tr>
+              <td>Large</td>
+              <td>100,000</td>
+              <td>30,000</td>
+              <td class="neg">−40,000</td>
+              <td class="neg">−40,000</td>
+            </tr>
+            <tr>
+              <td>Very large</td>
+              <td>300,000</td>
+              <td>25,000</td>
+              <td class="neg">−160,000</td>
+              <td class="neg">−160,000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="conclusion"><span class="conclusion-icon">🛡️</span>
+        <div class="conclusion-text"><strong>Maximin decision = Small station</strong> (maximum of minimums = −$10,000)
+        </div>
+      </div>
+
+      <div class="step-label">d) Equally Likely Decision</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Size</th>
+              <th>Good ($)</th>
+              <th>Fair ($)</th>
+              <th>Poor ($)</th>
+              <th>Row Average</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Small</td>
+              <td>50,000</td>
+              <td>20,000</td>
+              <td class="neg">−10,000</td>
+              <td>20,000</td>
+            </tr>
+            <tr>
+              <td>Medium</td>
+              <td>80,000</td>
+              <td>30,000</td>
+              <td class="neg">−20,000</td>
+              <td>30,000</td>
+            </tr>
+            <tr>
+              <td>Large</td>
+              <td>100,000</td>
+              <td>30,000</td>
+              <td class="neg">−40,000</td>
+              <td>30,000</td>
+            </tr>
+            <tr>
+              <td>Very large</td>
+              <td>300,000</td>
+              <td>25,000</td>
+              <td class="neg">−160,000</td>
+              <td class="highlight-cell">55,000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="conclusion"><span class="conclusion-icon">⚖️</span>
+        <div class="conclusion-text"><strong>Equally likely decision = Very large station</strong> (average = $55,000)
+        </div>
+      </div>
+
+      <div class="step-label">e) Criterion of Realism (α = 0.8)</div>
+      <div class="formula-box"><span class="formula-label">Formula</span>Weighted Value = α × (Max payoff) + (1−α) ×
+        (Min payoff)</div>
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">Small station</span>0.8(50,000) + 0.2(−10,000) = 40,000 − 2,000 =
+          <strong>$38,000</strong>
+        </div>
+        <div class="calc-item"><span class="label">Medium station</span>0.8(80,000) + 0.2(−20,000) = 64,000 − 4,000 =
+          <strong>$60,000</strong>
+        </div>
+        <div class="calc-item"><span class="label">Large station</span>0.8(100,000) + 0.2(−40,000) = 80,000 − 8,000 =
+          <strong>$72,000</strong>
+        </div>
+        <div class="calc-item"><span class="label">Very large station</span>0.8(300,000) + 0.2(−160,000) = 240,000 −
+          32,000 = <strong>$208,000</strong> ← Best</div>
+      </div>
+      <div class="conclusion"><span class="conclusion-icon">🎯</span>
+        <div class="conclusion-text"><strong>Criterion of realism decision = Very large station</strong> ($208,000 with
+          α=0.8)</div>
+      </div>
+
+      <div class="step-label">f) Opportunity Loss Table</div>
+      <p style="color:rgba(245,237,216,0.65);font-size:0.9rem;margin-bottom:12px;">Regret = Best in column − Actual
+        payoff</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Size</th>
+              <th>Good Market ($)</th>
+              <th>Fair Market ($)</th>
+              <th>Poor Market ($)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Small</td>
+              <td>250,000</td>
+              <td>10,000</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>Medium</td>
+              <td>220,000</td>
+              <td>0</td>
+              <td>10,000</td>
+            </tr>
+            <tr>
+              <td>Large</td>
+              <td>200,000</td>
+              <td>0</td>
+              <td>30,000</td>
+            </tr>
+            <tr>
+              <td>Very large</td>
+              <td>0</td>
+              <td>5,000</td>
+              <td>150,000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="step-label">g) Minimax Regret Decision</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Size</th>
+              <th>Good Market ($)</th>
+              <th>Fair Market ($)</th>
+              <th>Poor Market ($)</th>
+              <th>Maximum in Row</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Small</td>
+              <td>250,000</td>
+              <td>10,000</td>
+              <td>0</td>
+              <td>250,000</td>
+            </tr>
+            <tr>
+              <td>Medium</td>
+              <td>220,000</td>
+              <td>0</td>
+              <td>10,000</td>
+              <td>220,000</td>
+            </tr>
+            <tr>
+              <td>Large</td>
+              <td>200,000</td>
+              <td>0</td>
+              <td>30,000</td>
+              <td>200,000</td>
+            </tr>
+            <tr>
+              <td>Very large</td>
+              <td>0</td>
+              <td>5,000</td>
+              <td>150,000</td>
+              <td class="highlight-cell">150,000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="conclusion"><span class="conclusion-icon">🎯</span>
+        <div class="conclusion-text"><strong>Minimax regret decision = Very large station</strong> (minimum of maximum
+          regrets = $150,000)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════════════════════════ 22.1 -->
+  <div class="full-width-section bg-alt" id="ex221">
+    <div class="section reveal">
+      <div class="section-header">
+        <div class="section-num">22.1</div>
+        <div class="section-info">
+          <span class="section-tag">Opportunity Loss</span>
+          <h2 class="section-title">Opportunity Loss Table from Payoff Table</h2>
+        </div>
+      </div>
+
+      <div class="problem-box">Set up the opportunity loss table from the following payoff table:</div>
+
+      <div class="table-wrap" style="max-width:360px;">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>a₁</th>
+              <th>a₂</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>s₁</td>
+              <td>55</td>
+              <td>26</td>
+            </tr>
+            <tr>
+              <td>s₂</td>
+              <td>43</td>
+              <td>38</td>
+            </tr>
+            <tr>
+              <td>s₃</td>
+              <td>29</td>
+              <td>43</td>
+            </tr>
+            <tr>
+              <td>s₄</td>
+              <td>15</td>
+              <td>51</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="step-label">Solution — Opportunity Loss = Max Payoff in Row − Actual Payoff</div>
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">Row s₁ (Max = 55)</span>Loss for a₁: 55−55 = 0 &nbsp;|&nbsp; Loss for
+          a₂: 55−26 = 29</div>
+        <div class="calc-item"><span class="label">Row s₂ (Max = 43)</span>Loss for a₁: 43−43 = 0 &nbsp;|&nbsp; Loss for
+          a₂: 43−38 = 5</div>
+        <div class="calc-item"><span class="label">Row s₃ (Max = 43)</span>Loss for a₁: 43−29 = 14 &nbsp;|&nbsp; Loss
+          for a₂: 43−43 = 0</div>
+        <div class="calc-item"><span class="label">Row s₄ (Max = 51)</span>Loss for a₁: 51−15 = 36 &nbsp;|&nbsp; Loss
+          for a₂: 51−51 = 0</div>
+      </div>
+
+      <div class="step-label">Opportunity Loss (Regret) Table</div>
+      <div class="table-wrap" style="max-width:360px;">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>a₁</th>
+              <th>a₂</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>s₁</td>
+              <td>0</td>
+              <td>29</td>
+            </tr>
+            <tr>
+              <td>s₂</td>
+              <td>0</td>
+              <td>5</td>
+            </tr>
+            <tr>
+              <td>s₃</td>
+              <td>14</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>s₄</td>
+              <td>36</td>
+              <td>0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════════════════════════ 22.2 -->
+  <div class="full-width-section" id="ex222">
+    <div class="section reveal">
+      <div class="section-header">
+        <div class="section-num">22.2</div>
+        <div class="section-info">
+          <span class="section-tag">Decision Tree</span>
+          <h2 class="section-title">Decision Tree for Exercise 22.1</h2>
+        </div>
+      </div>
+
+      <div class="tree-container">
+        <svg class="tree-svg" viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg"
+          style="width:100%;max-width:700px;">
+          <defs>
+            <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <polygon points="0 0, 8 3, 0 6" fill="rgba(201,168,76,0.6)" />
+            </marker>
+          </defs>
+          <!-- Root decision node -->
+          <rect x="20" y="140" width="60" height="36" rx="6" fill="rgba(201,168,76,0.15)" stroke="rgba(201,168,76,0.5)"
+            stroke-width="1.5" />
+          <text x="50" y="163" text-anchor="middle" fill="#C9A84C" font-size="11" font-family="Playfair Display, serif"
+            font-weight="700">Decision</text>
+
+          <!-- Branch a1 -->
+          <line x1="80" y1="158" x2="160" y2="80" stroke="rgba(201,168,76,0.4)" stroke-width="1.5"
+            marker-end="url(#arr)" />
+          <text x="118" y="108" fill="rgba(245,237,216,0.7)" font-size="10" font-family="Crimson Text, serif">a₁</text>
+          <!-- Chance node a1 -->
+          <circle cx="172" cy="75" r="18" fill="rgba(26,107,124,0.25)" stroke="rgba(42,157,181,0.5)"
+            stroke-width="1.5" />
+          <text x="172" y="79" text-anchor="middle" fill="#2A9DB5" font-size="9"
+            font-family="Crimson Text, serif">Chance</text>
+          <!-- a1 outcomes -->
+          <line x1="190" y1="75" x2="340" y2="30" stroke="rgba(201,168,76,0.25)" stroke-width="1"
+            marker-end="url(#arr)" />
+          <text x="260" y="42" fill="rgba(245,237,216,0.6)" font-size="9">s₁(55)</text>
+          <line x1="190" y1="75" x2="340" y2="75" stroke="rgba(201,168,76,0.25)" stroke-width="1"
+            marker-end="url(#arr)" />
+          <text x="260" y="68" fill="rgba(245,237,216,0.6)" font-size="9">s₂(43)</text>
+          <line x1="190" y1="75" x2="340" y2="115" stroke="rgba(201,168,76,0.25)" stroke-width="1"
+            marker-end="url(#arr)" />
+          <text x="260" y="103" fill="rgba(245,237,216,0.6)" font-size="9">s₃(29)</text>
+          <line x1="190" y1="75" x2="340" y2="150" stroke="rgba(201,168,76,0.25)" stroke-width="1"
+            marker-end="url(#arr)" />
+          <text x="260" y="140" fill="rgba(245,237,216,0.6)" font-size="9">s₄(15)</text>
+
+          <!-- Branch a2 -->
+          <line x1="80" y1="158" x2="160" y2="235" stroke="rgba(201,168,76,0.4)" stroke-width="1.5"
+            marker-end="url(#arr)" />
+          <text x="118" y="212" fill="rgba(245,237,216,0.7)" font-size="10" font-family="Crimson Text, serif">a₂</text>
+          <!-- Chance node a2 -->
+          <circle cx="172" cy="245" r="18" fill="rgba(26,107,124,0.25)" stroke="rgba(42,157,181,0.5)"
+            stroke-width="1.5" />
+          <text x="172" y="249" text-anchor="middle" fill="#2A9DB5" font-size="9"
+            font-family="Crimson Text, serif">Chance</text>
+          <!-- a2 outcomes -->
+          <line x1="190" y1="245" x2="340" y2="185" stroke="rgba(201,168,76,0.25)" stroke-width="1"
+            marker-end="url(#arr)" />
+          <text x="260" y="208" fill="rgba(245,237,216,0.6)" font-size="9">s₁(26)</text>
+          <line x1="190" y1="245" x2="340" y2="220" stroke="rgba(201,168,76,0.25)" stroke-width="1"
+            marker-end="url(#arr)" />
+          <text x="260" y="226" fill="rgba(245,237,216,0.6)" font-size="9">s₂(38)</text>
+          <line x1="190" y1="245" x2="340" y2="260" stroke="rgba(201,168,76,0.25)" stroke-width="1"
+            marker-end="url(#arr)" />
+          <text x="260" y="255" fill="rgba(245,237,216,0.6)" font-size="9">s₃(43)</text>
+          <line x1="190" y1="245" x2="340" y2="295" stroke="rgba(201,168,76,0.25)" stroke-width="1"
+            marker-end="url(#arr)" />
+          <text x="260" y="285" fill="rgba(245,237,216,0.6)" font-size="9">s₄(51)</text>
+
+          <!-- Payoff labels -->
+          <text x="350" y="34" fill="#7de08a" font-size="10" font-family="JetBrains Mono">55</text>
+          <text x="350" y="79" fill="#7de08a" font-size="10" font-family="JetBrains Mono">43</text>
+          <text x="350" y="119" fill="#7de08a" font-size="10" font-family="JetBrains Mono">29</text>
+          <text x="350" y="154" fill="#7de08a" font-size="10" font-family="JetBrains Mono">15</text>
+          <text x="350" y="189" fill="#7de08a" font-size="10" font-family="JetBrains Mono">26</text>
+          <text x="350" y="224" fill="#7de08a" font-size="10" font-family="JetBrains Mono">38</text>
+          <text x="350" y="264" fill="#7de08a" font-size="10" font-family="JetBrains Mono">43</text>
+          <text x="350" y="299" fill="#7de08a" font-size="10" font-family="JetBrains Mono">51</text>
+
+          <!-- Legend -->
+          <rect x="430" y="50" width="120" height="80" rx="8" fill="rgba(11,26,53,0.8)" stroke="rgba(201,168,76,0.2)"
+            stroke-width="1" />
+          <text x="490" y="70" text-anchor="middle" fill="rgba(201,168,76,0.8)" font-size="10"
+            font-family="Crimson Text, serif" font-weight="600">Legend</text>
+          <rect x="442" y="80" width="16" height="10" rx="2" fill="rgba(201,168,76,0.15)" stroke="rgba(201,168,76,0.5)"
+            stroke-width="1" />
+          <text x="464" y="90" fill="rgba(245,237,216,0.6)" font-size="9">Decision Node</text>
+          <circle cx="450" cy="108" r="8" fill="rgba(26,107,124,0.25)" stroke="rgba(42,157,181,0.5)" stroke-width="1" />
+          <text x="464" y="112" fill="rgba(245,237,216,0.6)" font-size="9">Chance Node</text>
+          <line x1="442" y1="126" x2="462" y2="126" stroke="rgba(245,237,216,0.4)" stroke-width="1.5"
+            stroke-dasharray="3,2" />
+          <text x="464" y="130" fill="rgba(245,237,216,0.6)" font-size="9">Outcome</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════════════════════════ 22.3 -->
+  <div class="full-width-section bg-alt" id="ex223">
+    <div class="section reveal">
+      <div class="section-header">
+        <div class="section-num">22.3</div>
+        <div class="section-info">
+          <span class="section-tag">EMV Decision</span>
+          <h2 class="section-title">EMV Decision — Exercise 22.1 with Probabilities</h2>
+        </div>
+      </div>
+
+      <div class="problem-box">
+        Given probabilities: P(s₁) = 0.4, P(s₂) = 0.1, P(s₃) = 0.3, P(s₄) = 0.2. Determine the EMV decision using the
+        opportunity loss table from 22.1.
+      </div>
+
+      <p style="color:rgba(245,237,216,0.7);margin-bottom:12px;">Using opportunity loss table:</p>
+      <div class="table-wrap" style="max-width:500px;">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>s₁</th>
+              <th>s₂</th>
+              <th>s₃</th>
+              <th>s₄</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>a₁</td>
+              <td>0</td>
+              <td>0</td>
+              <td>14</td>
+              <td>36</td>
+            </tr>
+            <tr>
+              <td>a₂</td>
+              <td>29</td>
+              <td>5</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="step-label">EMV Calculations</div>
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">EMV(a₁) with P(s₁)=0.4</span>(0)(0.4) + (0)(0.1) + (14)(0.3) +
+          (36)(0.2) = 0 + 0 + 4.2 + 7.2 = <strong>11.4</strong></div>
+        <div class="calc-item"><span class="label">EMV(a₂) with all probabilities</span>(29)(0.4) + (5)(0.1) + (0)(0.3)
+          + (0)(0.2) = 11.6 + 0.5 + 0 + 0 = <strong>12.1</strong></div>
+      </div>
+      <div class="conclusion"><span class="conclusion-icon">✅</span>
+        <div class="conclusion-text">The <strong>highest EMV</strong> = <strong>a₂</strong>. Therefore, the EMV decision
+          is <strong>a₂</strong>.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════════════════════════ 22.4 -->
+  <div class="full-width-section" id="ex224">
+    <div class="section reveal">
+      <div class="section-header">
+        <div class="section-num">22.4</div>
+        <div class="section-info">
+          <span class="section-tag">Full Analysis</span>
+          <h2 class="section-title">Complete Decision Analysis — 3×3 Payoff Table</h2>
+        </div>
+      </div>
+
+      <div class="problem-box">Given the following payoff table — perform maximax, maximin, criterion of realism
+        (α=0.8), equally likely, minimax regret, EMV, EVPI, and EOL analysis.</div>
+
+      <div class="table-wrap" style="max-width:400px;">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>s₁</th>
+              <th>s₂</th>
+              <th>s₃</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>a₁</td>
+              <td>20</td>
+              <td>8</td>
+              <td class="neg">−10</td>
+            </tr>
+            <tr>
+              <td>a₂</td>
+              <td>5</td>
+              <td>5</td>
+              <td>5</td>
+            </tr>
+            <tr>
+              <td>a₃</td>
+              <td class="neg">−1</td>
+              <td>4</td>
+              <td>10</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="step-label">a) Maximax</div>
+      <div class="table-wrap" style="max-width:500px;">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>s₁</th>
+              <th>s₂</th>
+              <th>s₃</th>
+              <th>Max in Row</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>a₁</td>
+              <td>20</td>
+              <td>8</td>
+              <td class="neg">−10</td>
+              <td class="highlight-cell">20</td>
+            </tr>
+            <tr>
+              <td>a₂</td>
+              <td>5</td>
+              <td>5</td>
+              <td>5</td>
+              <td>5</td>
+            </tr>
+            <tr>
+              <td>a₃</td>
+              <td class="neg">−1</td>
+              <td>4</td>
+              <td>10</td>
+              <td>10</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="conclusion"><span class="conclusion-icon">🏆</span>
+        <div class="conclusion-text"><strong>Maximax = a₁</strong> (max of maximums = 20)</div>
+      </div>
+
+      <div class="step-label">b) Maximin</div>
+      <div class="table-wrap" style="max-width:500px;">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>s₁</th>
+              <th>s₂</th>
+              <th>s₃</th>
+              <th>Min in Row</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>a₁</td>
+              <td>20</td>
+              <td>8</td>
+              <td class="neg">−10</td>
+              <td class="neg">−10</td>
+            </tr>
+            <tr>
+              <td>a₂</td>
+              <td>5</td>
+              <td>5</td>
+              <td>5</td>
+              <td class="highlight-cell">5</td>
+            </tr>
+            <tr>
+              <td>a₃</td>
+              <td class="neg">−1</td>
+              <td>4</td>
+              <td>10</td>
+              <td class="neg">−1</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="conclusion"><span class="conclusion-icon">🛡️</span>
+        <div class="conclusion-text"><strong>Maximin = a₂</strong> (max of minimums = 5)</div>
+      </div>
+
+      <div class="step-label">c) Criterion of Realism (α = 0.8)</div>
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">a₁</span>0.8 × 20 + 0.2 × (−10) = 16 − 2 = <strong>14</strong> ← Best
+        </div>
+        <div class="calc-item"><span class="label">a₂</span>0.8 × 5 + 0.2 × 5 = 4 + 1 = <strong>5</strong></div>
+        <div class="calc-item"><span class="label">a₃</span>0.8 × 10 + 0.2 × (−1) = 8 − 0.2 = <strong>7.8</strong></div>
+      </div>
+      <div class="conclusion"><span class="conclusion-icon">🎯</span>
+        <div class="conclusion-text"><strong>Criterion of realism decision = a₁</strong> (value = 14)</div>
+      </div>
+
+      <div class="step-label">d) Equally Likely</div>
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">a₁</span>(20 + 8 + (−10)) / 3 = 18/3 = <strong>6</strong> ← Best
+        </div>
+        <div class="calc-item"><span class="label">a₂</span>(5 + 5 + 5) / 3 = <strong>5</strong></div>
+        <div class="calc-item"><span class="label">a₃</span>(−1 + 4 + 10) / 3 = 13/3 ≈ <strong>4.33</strong></div>
+      </div>
+      <div class="conclusion"><span class="conclusion-icon">⚖️</span>
+        <div class="conclusion-text"><strong>Equally likely decision = a₁</strong> (average = 6)</div>
+      </div>
+
+      <div class="step-label">e) Minimax Regret</div>
+      <div class="table-wrap" style="max-width:520px;">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>s₁</th>
+              <th>s₂</th>
+              <th>s₃</th>
+              <th>Max Regret</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>a₁</td>
+              <td>20−20=0</td>
+              <td>8−8=0</td>
+              <td>10−(−10)=20</td>
+              <td>20</td>
+            </tr>
+            <tr>
+              <td>a₂</td>
+              <td>20−5=15</td>
+              <td>8−5=3</td>
+              <td>10−5=5</td>
+              <td class="highlight-cell">15</td>
+            </tr>
+            <tr>
+              <td>a₃</td>
+              <td>20−(−1)=21</td>
+              <td>8−4=4</td>
+              <td>10−10=0</td>
+              <td>21</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="conclusion"><span class="conclusion-icon">🎯</span>
+        <div class="conclusion-text"><strong>Minimax regret = a₂</strong> (minimum of max regrets = 15)</div>
+      </div>
+
+      <div class="step-label">f) EMV (P(s₁)=0.2, P(s₂)=0.6, P(s₃)=0.2)</div>
+      <div class="emv-grid">
+        <div class="emv-card best">
+          <div class="label">EMV(a₁)</div>
+          <div class="value">6.8</div>
+          <div class="sub">0.2(20)+0.6(8)+0.2(−10)</div>
+          <div class="best-badge">✓ MAX EMV</div>
+        </div>
+        <div class="emv-card">
+          <div class="label">EMV(a₂)</div>
+          <div class="value">5.0</div>
+          <div class="sub">0.2(5)+0.6(5)+0.2(5)</div>
+        </div>
+        <div class="emv-card">
+          <div class="label">EMV(a₃)</div>
+          <div class="value">4.2</div>
+          <div class="sub">0.2(−1)+0.6(4)+0.2(10)</div>
+        </div>
+      </div>
+
+      <div class="step-label">EVPI — Expected Value of Perfect Information</div>
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">EVwPI</span>= 20×0.2 + 8×0.6 + 10×0.2 = 4 + 4.8 + 2 =
+          <strong>10.8</strong>
+        </div>
+        <div class="calc-item"><span class="label">Max EMV</span>= <strong>6.8</strong></div>
+        <div class="calc-item"><span class="label">EVPI = EVwPI − Max(EMV)</span>= 10.8 − 6.8 = <strong>4</strong></div>
+      </div>
+
+      <div class="step-label">Expected Opportunity Loss (EOL)</div>
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">EOL(a₁)</span>0.2×0 + 0.6×0 + 0.2×20 = <strong>4</strong></div>
+        <div class="calc-item"><span class="label">EOL(a₂)</span>0.2×15 + 0.6×3 + 0.2×5 = 3 + 1.8 + 1 =
+          <strong>5.8</strong> (Note: corrected from book)
+        </div>
+        <div class="calc-item"><span class="label">EOL(a₃)</span>0.2×21 + 0.6×4 + 0.2×0 = 4.2 + 2.4 =
+          <strong>6.6</strong>
+        </div>
+      </div>
+      <div class="conclusion"><span class="conclusion-icon">📊</span>
+        <div class="conclusion-text">Minimum EOL = <strong>4 (a₁)</strong>. Confirms EVPI = 4. So, minimum loss is
+          <strong>4</strong>.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════════════════════════ 22.5 -->
+  <div class="full-width-section bg-alt" id="ex225">
+    <div class="section reveal">
+      <div class="section-header">
+        <div class="section-num">22.5</div>
+        <div class="section-info">
+          <span class="section-tag">Opportunity Loss</span>
+          <h2 class="section-title">Opportunity Loss Table — Exercise 22.4</h2>
+        </div>
+      </div>
+
+      <p style="color:rgba(245,237,216,0.7);margin-bottom:16px;font-size:1rem;">Opportunity Loss = Max payoff in column
+        − Actual payoff</p>
+
+      <div class="step-label">Calculations per State of Nature</div>
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">s₁ (Max = 20)</span>a₁: 20−20=0 &nbsp;|&nbsp; a₂: 20−5=15
+          &nbsp;|&nbsp; a₃: 20−(−1)=21</div>
+        <div class="calc-item"><span class="label">s₂ (Max = 8)</span>a₁: 8−8=0 &nbsp;|&nbsp; a₂: 8−5=3 &nbsp;|&nbsp;
+          a₃: 8−4=4</div>
+        <div class="calc-item"><span class="label">s₃ (Max = 10)</span>a₁: 10−(−10)=20 &nbsp;|&nbsp; a₂: 10−5=5
+          &nbsp;|&nbsp; a₃: 10−10=0</div>
+      </div>
+
+      <div class="step-label">Opportunity Loss Table</div>
+      <div class="table-wrap" style="max-width:400px;">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>s₁</th>
+              <th>s₂</th>
+              <th>s₃</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>a₁</td>
+              <td>0</td>
+              <td>0</td>
+              <td>20</td>
+            </tr>
+            <tr>
+              <td>a₂</td>
+              <td>15</td>
+              <td>3</td>
+              <td>5</td>
+            </tr>
+            <tr>
+              <td>a₃</td>
+              <td>21</td>
+              <td>4</td>
+              <td>0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════════════════════════ 22.6 -->
+  <div class="full-width-section" id="ex226">
+    <div class="section reveal">
+      <div class="section-header">
+        <div class="section-num">22.6</div>
+        <div class="section-info">
+          <span class="section-tag">EOL Decision</span>
+          <h2 class="section-title">EOL Decision — Exercise 22.5 with Probabilities</h2>
+        </div>
+      </div>
+
+      <div class="problem-box">
+        Given probabilities: P(s₁) = 0.2, P(s₂) = 0.6, P(s₃) = 0.2. Determine the EOL decision.
+      </div>
+
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">EOL(a₁)</span>(0.2 × 0) + (0.6 × 0) + (0.2 × 20) = 0 + 0 + 4 =
+          <strong>4</strong> ← Minimum (Best)
+        </div>
+        <div class="calc-item"><span class="label">EOL(a₂)</span>(0.2 × 15) + (0.6 × 3) + (0.2 × 5) = 3 + 1.8 + 1 =
+          <strong>5.8</strong>
+        </div>
+        <div class="calc-item"><span class="label">EOL(a₃)</span>(0.2 × 21) + (0.6 × 4) + (0.2 × 0) = 4.2 + 2.4 + 0 =
+          <strong>6.6</strong>
+        </div>
+      </div>
+
+      <div class="emv-grid">
+        <div class="emv-card best">
+          <div class="label">EOL(a₁)</div>
+          <div class="value">4.0</div>
+          <div class="sub">Minimum loss</div>
+          <div class="best-badge">✓ EOL DECISION</div>
+        </div>
+        <div class="emv-card">
+          <div class="label">EOL(a₂)</div>
+          <div class="value">5.8</div>
+        </div>
+        <div class="emv-card">
+          <div class="label">EOL(a₃)</div>
+          <div class="value">6.6</div>
+        </div>
+      </div>
+      <div class="conclusion"><span class="conclusion-icon">✅</span>
+        <div class="conclusion-text">The <strong>EOL decision is a₁</strong> with minimum expected opportunity loss of
+          <strong>4</strong>.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════════════════════════ 22.7 -->
+  <div class="full-width-section bg-alt" id="ex227">
+    <div class="section reveal">
+      <div class="section-header">
+        <div class="section-num">22.7</div>
+        <div class="section-info">
+          <span class="section-tag">Baker Decision</span>
+          <h2 class="section-title">Baker's Cake Baking Decision</h2>
+        </div>
+      </div>
+
+      <div class="problem-box">
+        A baker must decide how many specialty cakes to bake each morning. Daily demand ranges from 0 to 3 cakes. Each
+        cake costs <strong>$3.00</strong> to produce and sells for <strong>$8.00</strong>. Any unsold cakes are thrown
+        away at the end of the day. Assume each level of demand is equally likely (P = 0.25 for each).
+      </div>
+
+      <div class="step-label">a) Payoff Table</div>
+      <p style="color:rgba(245,237,216,0.65);font-size:0.9rem;margin-bottom:12px;">Profit = $5 per cake sold (selling
+        price $8 − cost $3). Loss = $3 per unsold cake (cost only).</p>
+      <p style="color:rgba(245,237,216,0.65);font-size:0.9rem;margin-bottom:12px;">Formula: P = (5 × Cakes Sold) − (3 ×
+        Unsold Cakes)</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Demand \ Action</th>
+              <th>Bake 0 (a₀)</th>
+              <th>Bake 1 (a₁)</th>
+              <th>Bake 2 (a₂)</th>
+              <th>Bake 3 (a₃)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Demand 0 (s₀)</td>
+              <td>$0</td>
+              <td class="neg">−$3</td>
+              <td class="neg">−$6</td>
+              <td class="neg">−$9</td>
+            </tr>
+            <tr>
+              <td>Demand 1 (s₁)</td>
+              <td>$0</td>
+              <td class="pos">$5</td>
+              <td class="pos">$2</td>
+              <td class="neg">−$1</td>
+            </tr>
+            <tr>
+              <td>Demand 2 (s₂)</td>
+              <td>$0</td>
+              <td class="pos">$5</td>
+              <td class="pos">$10</td>
+              <td class="pos">$7</td>
+            </tr>
+            <tr>
+              <td>Demand 3 (s₃)</td>
+              <td>$0</td>
+              <td class="pos">$5</td>
+              <td class="pos">$10</td>
+              <td class="pos">$15</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="step-label">b) Opportunity Loss Table (Regret Table)</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Demand \ Action</th>
+              <th>Bake 0 (a₀)</th>
+              <th>Bake 1 (a₁)</th>
+              <th>Bake 2 (a₂)</th>
+              <th>Bake 3 (a₃)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Demand 0 (s₀)</td>
+              <td>$0</td>
+              <td>$3</td>
+              <td>$6</td>
+              <td>$9</td>
+            </tr>
+            <tr>
+              <td>Demand 1 (s₁)</td>
+              <td>$5</td>
+              <td>$0</td>
+              <td>$3</td>
+              <td>$6</td>
+            </tr>
+            <tr>
+              <td>Demand 2 (s₂)</td>
+              <td>$10</td>
+              <td>$5</td>
+              <td>$0</td>
+              <td>$3</td>
+            </tr>
+            <tr>
+              <td>Demand 3 (s₃)</td>
+              <td>$15</td>
+              <td>$10</td>
+              <td>$5</td>
+              <td>$0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="step-label">c) EMV Calculations (P = 0.25 for each)</div>
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">EMV (Bake 0)</span>(0.25×0) + (0.25×0) + (0.25×0) + (0.25×0) =
+          <strong>$0.00</strong>
+        </div>
+        <div class="calc-item"><span class="label">EMV (Bake 1)</span>(0.25×−3) + (0.25×5) + (0.25×5) + (0.25×5) = −0.75
+          + 1.25 + 1.25 + 1.25 = <strong>$3.00</strong></div>
+        <div class="calc-item"><span class="label">EMV (Bake 2)</span>(0.25×−6) + (0.25×2) + (0.25×10) + (0.25×10) =
+          −1.50 + 0.50 + 2.50 + 2.50 = <strong>$4.00</strong> ← Best</div>
+        <div class="calc-item"><span class="label">EMV (Bake 3)</span>(0.25×−9) + (0.25×−1) + (0.25×7) + (0.25×15) =
+          −2.25 − 0.25 + 1.75 + 3.75 = <strong>$3.00</strong></div>
+      </div>
+
+      <div class="emv-grid">
+        <div class="emv-card">
+          <div class="label">Bake 0</div>
+          <div class="value">$0.00</div>
+        </div>
+        <div class="emv-card">
+          <div class="label">Bake 1</div>
+          <div class="value">$3.00</div>
+        </div>
+        <div class="emv-card best">
+          <div class="label">Bake 2</div>
+          <div class="value">$4.00</div>
+          <div class="best-badge">✓ BEST</div>
+        </div>
+        <div class="emv-card">
+          <div class="label">Bake 3</div>
+          <div class="value">$3.00</div>
+        </div>
+      </div>
+
+      <div class="conclusion"><span class="conclusion-icon">🎂</span>
+        <div class="conclusion-text"><strong>Conclusion:</strong> Based on the EMV criterion, the baker should
+          <strong>bake 2 cakes</strong> to maximize the expected daily profit at <strong>$4.00</strong>. In the decision
+          tree, these EMV values are placed at each chance node (circles). The baker should choose the branch with the
+          highest EMV.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════════════════════════ ACKNOWLEDGEMENT -->
+  <section class="ack-section" id="ack">
+    <h2 class="ack-title">
+      <span style="font-family:'Noto Serif Khmer',serif;">សេចក្តីថ្លែងអំណរអគុណ</span>
+    </h2>
+
+    <div class="ack-text">
+      <p class="km">យើងខ្ញុំជាសមាជិកក្នុងក្រុមកិច្ចការស្រាវជ្រាវ និងជានិស្សិតសិក្សាថ្នាក់បរិញ្ញាបត្រ ក្រុម 3D
+        ឆ្នាំសិក្សា ២០២៥ - ២០២៦ ឆមាសទី ២ ឆ្នាំទី ៣ ជំនាន់ទី ២៧ នៃសាកលវិទ្យាល័យភូមិន្ទភ្នំពេញ ។ </p>
+      <br>
+      <p class="km">សូមថ្លែងអំណរគុណយ៉ាងជ្រាលជ្រៅជាទីបំផុតដល់លោកគ្រូ អ៊ូ ភិចហាំ ជាគ្រូគណិតវិទ្យា
+        នៃសាកលវិទ្យាល័យភូមិន្ទភ្នំពេញ ។
+        ដែលបានយកចិត្តទុកដាក់និងចំណាយពេលវេលាដ៏មានតម្លៃក្នុងការបង្ហាត់បង្រៀនដល់យើងខ្ញុំទាំងអសើគ្នាតាំងពីដើមរហូតដល់បានបទពិសោធន៍ផ្សេងៗ
+        ក្នុងការសិក្សា និងបានទាំងចំណេះដឹង ផ្សេងៗ ខាងផ្នែកគណិតវិទ្យា ។ </p>
+      <br>
+      <p class="km">សូមថ្លែងអំណរគុណចំពោះ សាកលវិទ្យាធិការ សាកលវិទ្យាធិការរង ព្រឹទ្ធបុរស ព្រឹទ្ធបុរសរង សាស្ត្រាចារ្យ
+        សាស្ត្រាចារ្យរង និងលោកគ្រូ អ្នកគ្រូ ទាំងអស់នៃសាកលវិទ្យាល័យភូមិន្ទភ្នំពេញ ។
+        ដែលបានខិតខំបណ្តុះបណ្តាលខាងប្រព័ន្ធអប់រំឲស្របតាមកម្មវិធីសិក្សាអន្តរជាតិ
+        និងយកចិត្តទុកដាក់ក្នុងការពង្រឹងធនធានមនុស្សឲស្របទៅនឹងគោលនយោលបាយរបស់រាជរដ្ឋាភិបាលក្នុងព្រះរាជាណាចក្រកម្ពុជា ។
+      </p>
+      <br>
+      <p class="km">ជាទីបញ្ចប់ យើងខ្ញុំទាំងអស់គ្នាសូមប្រសិទ្ធពរជ័យជួនដល់សាស្ត្រាចារ្យ និង លោកគ្រូ អ្នកគ្រូ
+        ទាំងអស់នៃសាកលវិទ្យាល័យភូមិន្ទភ្នំពេញ សូមជួបតែសេចក្តីសុខចម្រើន សម្រេចបាននូវគ្រប់ភារកិច្ច និងប្រកបនូវពុទ្ធពរទាំង ៤
+        ប្រការគឺ អាយុ វណ្ណៈ សុខៈ ពលៈ កុំបីឃ្លៀងឃ្លាតឡើយ ៕ </p>
+    </div>
+
+    <h3 style="font-family:'Noto Serif Khmer',serif;color:var(--gold);margin:32px 0 16px;font-size:1.1rem;">សមាជិកក្រុម
+    </h3>
+    <div class="members-grid">
+      <div class="member-card">
+        <div class="member-num">04</div>
+        <div class="member-name">រុន សុធារ៉ា</div>
+      </div>
+      <div class="member-card">
+        <div class="member-num">07</div>
+        <div class="member-name">រី ស្រីណែត</div>
+      </div>
+      <div class="member-card">
+        <div class="member-num">10</div>
+        <div class="member-name">រុន មួយហេង</div>
+      </div>
+      <div class="member-card">
+        <div class="member-num">11</div>
+        <div class="member-name">រុន វីវៈ</div>
+      </div>
+      <div class="member-card">
+        <div class="member-num">30</div>
+        <div class="member-name">វុន វិច្ឆរ៉ា</div>
+      </div>
+      <div class="member-card">
+        <div class="member-num">36</div>
+        <div class="member-name">ស៊ា សុលីន</div>
+      </div>
+      <div class="member-card">
+        <div class="member-num">38</div>
+        <div class="member-name">ស៊ី ស៊ីវឡុង</div>
+      </div>
+    </div>
+
+    <div class="date-badge">
+      ភ្នំពេញ , ថ្ងៃអាទិត្យ ១១កើត ខែចេត្រ ឆ្នាំម្សាញ់ សប្តស័ក ពុទ្ធសករាជ ២៥៦៩
+      ត្រូវនឹង ថ្ងៃទី ២៩ ខែ មីនា ឆ្នាំ២០២៦
+
+    </div>
+
+    <p style="margin-top:20px;font-family:'Noto Serif Khmer',serif;font-size:0.85rem;color:rgba(201,168,76,0.6);">
+      ដេប៉ាតឺម៉ង់គណិតវិទ្យា · សាកលវិទ្យាល័យភូមិន្ទភ្នំពេញ</p>
+  </section>
+
+  <script>
+    // ── PROGRESS BAR
+    const bar = document.getElementById('progress');
+    window.addEventListener('scroll', () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (window.scrollY / h * 100) + '%';
+    });
+
+    // ── PARTICLES
+    const container = document.getElementById('particles');
+    for (let i = 0; i < 30; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const size = Math.random() * 4 + 2;
+      p.style.cssText = `
+    width:${size}px; height:${size}px;
+    left:${Math.random() * 100}%;
+    animation-duration:${Math.random() * 15 + 10}s;
+    animation-delay:${Math.random() * 15}s;
+  `;
+      container.appendChild(p);
+    }
+
+    // ── SCROLL REVEAL
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ── STAGGERED TABLE ROWS
+    document.querySelectorAll('tbody tr').forEach((row, i) => {
+      row.style.transition = `background 0.2s, opacity 0.5s ${i * 0.04}s, transform 0.5s ${i * 0.04}s`;
+      row.style.opacity = '0';
+      row.style.transform = 'translateX(-10px)';
+    });
+    const tableObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('tbody tr').forEach(row => {
+            row.style.opacity = '1';
+            row.style.transform = 'none';
+          });
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.table-wrap').forEach(t => tableObserver.observe(t));
+
+    // ── NAV ACTIVE HIGHLIGHT
+    const sections = document.querySelectorAll('[id]');
+    const navLinks = document.querySelectorAll('nav a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 100) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + current ? 'var(--gold)' : '';
+        a.style.borderBottomColor = a.getAttribute('href') === '#' + current ? 'var(--gold)' : 'transparent';
+      });
+    });
+  </script>
+</body>
+
+</html>
