@@ -321,7 +321,7 @@
       min-width: 80px;
     }
 
-    .section-info {}
+    /* .section-info {} */
 
     .section-tag {
       display: inline-block;
@@ -872,8 +872,9 @@
     <h1 class="hero-title"><span class="accent">Decision</span><br>Analysis</h1>
     <p class="hero-subtitle">ការវិភាគការសម្រេចចិត្ត — Maximax · Maximin · Equally Likely · Minimax Regret · EMV · EOL ·
       EVPI</p>
+    <p class="hero-subtitle">រៀបរៀងដោយនិស្សិត ៖ ស៊ា សុលីន</p>
     <div class="hero-meta">
-      <div class="hero-meta-item"><span class="num">10</span><span class="lbl">Exercises</span></div>
+      <div class="hero-meta-item"><span class="num">17</span><span class="lbl">Exercises</span></div>
       <div class="hero-meta-item"><span class="num">EMV</span><span class="lbl">Method</span></div>
       <div class="hero-meta-item"><span class="num">EOL</span><span class="lbl">Method</span></div>
       <div class="hero-meta-item"><span class="num">EVPI</span><span class="lbl">Analysis</span></div>
@@ -894,6 +895,13 @@
     <a href="#ex225">22.5</a>
     <a href="#ex226">22.6</a>
     <a href="#ex227">22.7</a>
+    <a href="#ex2217">22.17</a>
+    <a href="#ex2218">22.18</a>
+    <a href="#ex2219">22.19</a>
+    <a href="#ex2220">22.20</a>
+    <a href="#ex2221">22.21</a>
+    <a href="#ex2222">22.22</a>
+    <a href="#ex2223">22.23</a>
     <a href="#ack">អំណរគុណ</a>
   </nav>
 
@@ -2355,6 +2363,646 @@
           tree, these EMV values are placed at each chance node (circles). The baker should choose the branch with the
           highest EMV.
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="divider"></div> -->
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════════════════════════ 22.17 -->
+  <div class="full-width-section bg-alt" id="ex2217">
+    <div class="section reveal">
+      <div class="section-header">
+        <div class="section-num">22.17</div>
+        <div class="section-info">
+          <span class="section-tag">EPPI · EHV* · EVPI</span>
+          <h2 class="section-title">Find EPPI, EHV*, and EVPI</h2>
+        </div>
+      </div>
+
+      <div class="step-label">EPPI — Expected Payoff with Perfect Information (Best payoff in each state)</div>
+      <div class="table-wrap" style="max-width:400px;">
+        <table>
+          <thead>
+            <tr>
+              <th>State</th>
+              <th>Max Payoff</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>S₁</td>
+              <td class="highlight-cell">110</td>
+            </tr>
+            <tr>
+              <td>S₂</td>
+              <td class="highlight-cell">150</td>
+            </tr>
+            <tr>
+              <td>S₃</td>
+              <td class="highlight-cell">220</td>
+            </tr>
+            <tr>
+              <td>S₄</td>
+              <td class="highlight-cell">250</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="formula-box"><span class="formula-label">EPPI</span>= 0.1(110) + 0.25(150) + 0.50(220) + 0.15(250)
+      </div>
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">Calculation</span>= 11 + 37.5 + 110 + 37.5 = <strong>196</strong>
+        </div>
+      </div>
+
+      <div class="step-label">EHV* — Best Expected Monetary Value for each act</div>
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">a₁</span>= 0.1(60) + 0.25(40) + 0.5(220) + 0.15(250) = 6 + 10 + 110 +
+          37.5 = <strong>163.50</strong></div>
+        <div class="calc-item"><span class="label">a₂</span>= 0.1(110) + 0.25(110) + 0.5(120) + 0.15(120) = 11 + 27.5 +
+          60 + 18 = <strong>116.50</strong></div>
+        <div class="calc-item"><span class="label">a₃</span>= 0.1(75) + 0.25(150) + 0.5(85) + 0.15(130) = 7.5 + 37.5 +
+          42.5 + 19.5 = <strong>107.00</strong></div>
+      </div>
+      <div class="conclusion"><span class="conclusion-icon">🏆</span>
+        <div class="conclusion-text"><strong>EHV* = a₁ = 163.50</strong> (highest expected value)</div>
+      </div>
+
+      <div class="step-label">EVPI — Expected Value of Perfect Information</div>
+      <div class="formula-box"><span class="formula-label">Formula</span>EVPI = EPPI − EHV*</div>
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">EVPI</span>= 196 − 163.50 = <strong>32.50</strong></div>
+      </div>
+      <div class="conclusion"><span class="conclusion-icon">💡</span>
+        <div class="conclusion-text"><strong>EVPI = 32.50</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════════════════════════ 22.18 -->
+  <div class="full-width-section" id="ex2218">
+    <div class="section reveal">
+      <div class="section-header">
+        <div class="section-num">22.18</div>
+        <div class="section-info">
+          <span class="section-tag">EOL* Confirmation</span>
+          <h2 class="section-title">Compute EOL* — Confirm that EOL* = EVPI</h2>
+        </div>
+      </div>
+
+      <div class="step-label">Opportunity Loss Table</div>
+      <div class="table-wrap" style="max-width:500px;">
+        <table>
+          <thead>
+            <tr>
+              <th>State</th>
+              <th>a₁</th>
+              <th>a₂</th>
+              <th>a₃</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>S₁</td>
+              <td>50</td>
+              <td>0</td>
+              <td>35</td>
+            </tr>
+            <tr>
+              <td>S₂</td>
+              <td>110</td>
+              <td>40</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>S₃</td>
+              <td>0</td>
+              <td>100</td>
+              <td>135</td>
+            </tr>
+            <tr>
+              <td>S₄</td>
+              <td>0</td>
+              <td>130</td>
+              <td>120</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="step-label">EOL Calculations (P: 0.1, 0.25, 0.50, 0.15)</div>
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">EOL(a₁)</span>= 0.1(50) + 0.25(110) + 0.5(0) + 0.15(0) = 5 + 27.5 + 0
+          + 0 = <strong>32.50</strong> ← Minimum</div>
+        <div class="calc-item"><span class="label">EOL(a₂)</span>= 0 + 0.25(40) + 0.50(100) + 0.15(130) = 0 + 10 + 50 +
+          19.5 = <strong>79.80</strong> (Note: book shows 79.80)</div>
+        <div class="calc-item"><span class="label">EOL(a₃)</span>= 0.1(35) + 0 + 0.5(135) + 0.15(120) = 3.5 + 0 + 67.5 +
+          18 = <strong>89</strong></div>
+      </div>
+
+      <div class="emv-grid">
+        <div class="emv-card best">
+          <div class="label">EOL(a₁)</div>
+          <div class="value">32.50</div>
+          <div class="best-badge">✓ EOL*</div>
+        </div>
+        <div class="emv-card">
+          <div class="label">EOL(a₂)</div>
+          <div class="value">79.80</div>
+        </div>
+        <div class="emv-card">
+          <div class="label">EOL(a₃)</div>
+          <div class="value">89.00</div>
+        </div>
+      </div>
+
+      <div class="conclusion"><span class="conclusion-icon">✅</span>
+        <div class="conclusion-text"><strong>EOL* = a₁ = 32.50</strong><br><strong>Confirmed: EOL* = EVPI =
+            32.50</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════════════════════════ 22.19 -->
+  <div class="full-width-section bg-alt" id="ex2219">
+    <div class="section reveal">
+      <div class="section-header">
+        <div class="section-num">22.19</div>
+        <div class="section-info">
+          <span class="section-tag">EVPI Determination</span>
+          <h2 class="section-title">Determine EVPI</h2>
+        </div>
+      </div>
+
+      <div class="problem-box">
+        Given payoff table with P(s₁) = 0.50, P(s₂) = 0.50:
+      </div>
+
+      <div class="table-wrap" style="max-width:500px;">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>a₁</th>
+              <th>a₂</th>
+              <th>a₃</th>
+              <th>a₄</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>S₁</td>
+              <td>65</td>
+              <td>20</td>
+              <td>45</td>
+              <td>30</td>
+            </tr>
+            <tr>
+              <td>S₂</td>
+              <td>70</td>
+              <td>110</td>
+              <td>80</td>
+              <td>95</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="step-label">EHV — Expected Monetary Value (equal weights 0.50, 0.50)</div>
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">a₁</span>= (65+70)/2 = <strong>67.50</strong> ← Best</div>
+        <div class="calc-item"><span class="label">a₂</span>= (20+110)/2 = <strong>65</strong></div>
+        <div class="calc-item"><span class="label">a₃</span>= (45+80)/2 = <strong>62.50</strong></div>
+        <div class="calc-item"><span class="label">a₄</span>= (30+95)/2 = <strong>62.50</strong></div>
+      </div>
+      <div class="conclusion"><span class="conclusion-icon">🏆</span>
+        <div class="conclusion-text"><strong>EHV* = a₁ = 67.50</strong></div>
+      </div>
+
+      <div class="step-label">EPPI — Best payoff in each state</div>
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">S₁ best</span>= max(65, 20, 45, 30) = <strong>65</strong></div>
+        <div class="calc-item"><span class="label">S₂ best</span>= max(70, 110, 80, 95) = <strong>110</strong></div>
+        <div class="calc-item"><span class="label">EPPI</span>= 0.5(65) + 0.5(110) = 32.5 + 55 = <strong>87.50</strong>
+        </div>
+      </div>
+
+      <div class="step-label">EVPI</div>
+      <div class="formula-box"><span class="formula-label">EVPI</span>= EPPI − EHV* = 87.50 − 67.50 =
+        <strong>20</strong>
+      </div>
+      <div class="conclusion"><span class="conclusion-icon">💡</span>
+        <div class="conclusion-text"><strong>So: EVPI = 20</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════════════════════════ 22.20 -->
+  <div class="full-width-section" id="ex2220">
+    <div class="section reveal">
+      <div class="section-header">
+        <div class="section-num">22.20</div>
+        <div class="section-info">
+          <span class="section-tag">Sensitivity Analysis</span>
+          <h2 class="section-title">Redo Exercise 22.10 — Changing Probabilities</h2>
+        </div>
+      </div>
+
+      <div class="problem-box">Redo Exercise 22.10, changing the probabilities to the following values. Payoff table
+        (same as 22.19): a₁,a₂,a₃,a₄ across S₁,S₂.</div>
+
+      <!-- Part a -->
+      <div class="step-label">a) P(s₁) = 0.75, P(s₂) = 0.25</div>
+
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">EHV — a₁</span>= 0.75(65) + 0.25(70) = 48.75 + 17.50 =
+          <strong>66.25</strong> ← Best
+        </div>
+        <div class="calc-item"><span class="label">EHV — a₂</span>= 0.75(20) + 0.25(110) = 15 + 27.50 =
+          <strong>42.50</strong>
+        </div>
+        <div class="calc-item"><span class="label">EHV — a₃</span>= 0.75(45) + 0.25(80) = 33.75 + 20 =
+          <strong>53.75</strong>
+        </div>
+        <div class="calc-item"><span class="label">EHV — a₄</span>= 0.75(30) + 0.25(95) = 22.50 + 23.75 =
+          <strong>46.25</strong>
+        </div>
+      </div>
+      <div class="conclusion"><span class="conclusion-icon">🏆</span>
+        <div class="conclusion-text"><strong>EHV* = a₁ = 66.25</strong></div>
+      </div>
+
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">EPPI</span>= 0.75(65) + 0.25(110) = 48.75 + 27.50 =
+          <strong>76.25</strong>
+        </div>
+        <div class="calc-item"><span class="label">EVPI = EPPI − EHV*</span>= 76.25 − 66.25 = <strong>10</strong></div>
+      </div>
+      <div class="conclusion"><span class="conclusion-icon">💡</span>
+        <div class="conclusion-text"><strong>EVPI = 10</strong> when P(s₁) = 0.75, P(s₂) = 0.25</div>
+      </div>
+
+      <!-- Part b -->
+      <div class="step-label">b) P(s₁) = 0.95, P(s₂) = 0.05</div>
+
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">EHV — a₁</span>= 0.95(65) + 0.05(70) = 61.75 + 3.50 =
+          <strong>65.25</strong> ← Best
+        </div>
+        <div class="calc-item"><span class="label">EHV — a₂</span>= 0.95(20) + 0.05(110) = 19 + 5.50 =
+          <strong>24.50</strong>
+        </div>
+        <div class="calc-item"><span class="label">EHV — a₃</span>= 0.95(45) + 0.05(80) = 42.75 + 4 =
+          <strong>46.75</strong>
+        </div>
+        <div class="calc-item"><span class="label">EHV — a₄</span>= 0.95(30) + 0.05(95) = 28.50 + 4.75 =
+          <strong>33.25</strong>
+        </div>
+      </div>
+      <div class="conclusion"><span class="conclusion-icon">🏆</span>
+        <div class="conclusion-text"><strong>EHV* = a₁ = 65.25</strong></div>
+      </div>
+
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">EPPI</span>= 0.95(65) + 0.05(110) = 61.75 + 5.50 =
+          <strong>67.25</strong>
+        </div>
+        <div class="calc-item"><span class="label">EVPI = EPPI − EHV*</span>= 67.25 − 65.25 = <strong>2</strong></div>
+      </div>
+      <div class="conclusion"><span class="conclusion-icon">💡</span>
+        <div class="conclusion-text"><strong>EVPI = 2</strong> when P(s₁) = 0.95, P(s₂) = 0.05</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════════════════════════ 22.21 -->
+  <div class="full-width-section bg-alt" id="ex2221">
+    <div class="section reveal">
+      <div class="section-header">
+        <div class="section-num">22.21</div>
+        <div class="section-info">
+          <span class="section-tag">Conclusion</span>
+          <h2 class="section-title">Conclusion about Probabilities and EVPI (from 22.19 and 22.20)</h2>
+        </div>
+      </div>
+
+      <div class="emv-grid" style="margin-bottom:24px;">
+        <div class="emv-card">
+          <div class="label">Balanced (0.5, 0.5)</div>
+          <div class="value">EVPI = 20</div>
+          <div class="sub">Probabilities equal</div>
+        </div>
+        <div class="emv-card">
+          <div class="label">More certain (0.75, 0.25)</div>
+          <div class="value">EVPI = 10</div>
+          <div class="sub">One state more likely</div>
+        </div>
+        <div class="emv-card best">
+          <div class="label">Almost certain (0.95, 0.05)</div>
+          <div class="value">EVPI = 2</div>
+          <div class="sub">Nearly certain outcome</div>
+        </div>
+      </div>
+
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">When probabilities are balanced (0.5, 0.5)</span>→ EVPI = 20</div>
+        <div class="calc-item"><span class="label">When one state becomes more certain (0.75, 0.25)</span>→ EVPI = 10
+        </div>
+        <div class="calc-item"><span class="label">When one state is almost certain (0.95, 0.05)</span>→ EVPI = 2</div>
+      </div>
+
+      <div class="conclusion"><span class="conclusion-icon">📌</span>
+        <div class="conclusion-text"><strong>Conclusion:</strong> As probabilities become more certain, EVPI
+          <strong>decreases</strong>. The value of perfect information diminishes when the outcome is already highly
+          predictable.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════════════════════════ 22.22 -->
+  <div class="full-width-section" id="ex2222">
+    <div class="section reveal">
+      <div class="section-header">
+        <div class="section-num">22.22</div>
+        <div class="section-info">
+          <span class="section-tag">Posterior Probabilities</span>
+          <h2 class="section-title">Determine the Posterior Probabilities</h2>
+        </div>
+      </div>
+
+      <div class="problem-box">
+        Given: P(s₁) = 0.25, P(s₂) = 0.40, P(s₃) = 0.35<br><br>
+        Likelihood table:
+      </div>
+
+      <div class="table-wrap" style="max-width:560px;">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>ℓ₁</th>
+              <th>ℓ₂</th>
+              <th>ℓ₃</th>
+              <th>ℓ₄</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>S₁</td>
+              <td>0.40</td>
+              <td>0.30</td>
+              <td>0.20</td>
+              <td>0.10</td>
+            </tr>
+            <tr>
+              <td>S₂</td>
+              <td>0.25</td>
+              <td>0.25</td>
+              <td>0.25</td>
+              <td>0.25</td>
+            </tr>
+            <tr>
+              <td>S₃</td>
+              <td>0</td>
+              <td>0.30</td>
+              <td>0.40</td>
+              <td>0.30</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- For ℓ₁ -->
+      <div class="step-label">For ℓ₁</div>
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">P(s₁ ∩ ℓ₁)</span>= 0.25 × 0.40 = 0.10</div>
+        <div class="calc-item"><span class="label">P(s₂ ∩ ℓ₁)</span>= 0.40 × 0.25 = 0.10</div>
+        <div class="calc-item"><span class="label">P(s₃ ∩ ℓ₁)</span>= 0.35 × 0 = 0</div>
+        <div class="calc-item"><span class="label">P(ℓ₁)</span>= 0.10 + 0.10 + 0 = <strong>0.20</strong></div>
+      </div>
+      <p style="color:rgba(245,237,216,0.7);font-size:0.9rem;margin:8px 0 4px;">Posterior probabilities:</p>
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">P(s₁ | ℓ₁)</span>= 0.10 / 0.20 = <strong>0.50</strong></div>
+        <div class="calc-item"><span class="label">P(s₂ | ℓ₁)</span>= 0.10 / 0.20 = <strong>0.50</strong></div>
+        <div class="calc-item"><span class="label">P(s₃ | ℓ₁)</span>= 0 / 0.20 = <strong>0</strong></div>
+      </div>
+
+      <!-- For ℓ₂ -->
+      <div class="step-label">For ℓ₂</div>
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">P(s₁ ∩ ℓ₂)</span>= 0.25 × 0.30 = 0.075</div>
+        <div class="calc-item"><span class="label">P(s₂ ∩ ℓ₂)</span>= 0.40 × 0.25 = 0.10</div>
+        <div class="calc-item"><span class="label">P(s₃ ∩ ℓ₂)</span>= 0.35 × 0.30 = 0.105</div>
+        <div class="calc-item"><span class="label">P(ℓ₂)</span>= 0.075 + 0.10 + 0.105 = <strong>0.28</strong></div>
+      </div>
+      <p style="color:rgba(245,237,216,0.7);font-size:0.9rem;margin:8px 0 4px;">Posterior probabilities:</p>
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">P(s₁ | ℓ₂)</span>= 0.075 / 0.28 = <strong>0.268</strong></div>
+        <div class="calc-item"><span class="label">P(s₂ | ℓ₂)</span>= 0.10 / 0.28 = <strong>0.357</strong></div>
+        <div class="calc-item"><span class="label">P(s₃ | ℓ₂)</span>= 0.105 / 0.28 = <strong>0.375</strong></div>
+      </div>
+
+      <!-- For ℓ₃ -->
+      <div class="step-label">For ℓ₃</div>
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">P(s₁ ∩ ℓ₃)</span>= 0.25 × 0.20 = 0.05</div>
+        <div class="calc-item"><span class="label">P(s₂ ∩ ℓ₃)</span>= 0.40 × 0.25 = 0.10</div>
+        <div class="calc-item"><span class="label">P(s₃ ∩ ℓ₃)</span>= 0.35 × 0.40 = 0.14</div>
+        <div class="calc-item"><span class="label">P(ℓ₃)</span>= 0.05 + 0.10 + 0.14 = <strong>0.29</strong></div>
+      </div>
+      <p style="color:rgba(245,237,216,0.7);font-size:0.9rem;margin:8px 0 4px;">Posterior probabilities:</p>
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">P(s₁ | ℓ₃)</span>= 0.05 / 0.29 = <strong>0.172</strong></div>
+        <div class="calc-item"><span class="label">P(s₂ | ℓ₃)</span>= 0.10 / 0.29 = <strong>0.345</strong></div>
+        <div class="calc-item"><span class="label">P(s₃ | ℓ₃)</span>= 0.14 / 0.29 = <strong>0.483</strong></div>
+      </div>
+
+      <!-- For ℓ₄ -->
+      <div class="step-label">For ℓ₄</div>
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">P(s₁ ∩ ℓ₄)</span>= 0.25 × 0.10 = 0.025</div>
+        <div class="calc-item"><span class="label">P(s₂ ∩ ℓ₄)</span>= 0.40 × 0.25 = 0.10</div>
+        <div class="calc-item"><span class="label">P(s₃ ∩ ℓ₄)</span>= 0.35 × 0.30 = 0.105</div>
+        <div class="calc-item"><span class="label">P(ℓ₄)</span>= 0.025 + 0.10 + 0.105 = <strong>0.23</strong></div>
+      </div>
+      <p style="color:rgba(245,237,216,0.7);font-size:0.9rem;margin:8px 0 4px;">Posterior probabilities:</p>
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">P(s₁ | ℓ₄)</span>= 0.025 / 0.23 = <strong>0.109</strong></div>
+        <div class="calc-item"><span class="label">P(s₂ | ℓ₄)</span>= 0.10 / 0.23 = <strong>0.435</strong></div>
+        <div class="calc-item"><span class="label">P(s₃ | ℓ₄)</span>= 0.105 / 0.23 = <strong>0.456</strong></div>
+      </div>
+
+      <!-- Summary table -->
+      <div class="step-label">Summary — Posterior Probabilities</div>
+      <div class="table-wrap" style="max-width:600px;">
+        <table>
+          <thead>
+            <tr>
+              <th>Indicator</th>
+              <th>P(s₁ | ℓ)</th>
+              <th>P(s₂ | ℓ)</th>
+              <th>P(s₃ | ℓ)</th>
+              <th>P(ℓ)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>ℓ₁</td>
+              <td>0.500</td>
+              <td>0.500</td>
+              <td>0</td>
+              <td>0.20</td>
+            </tr>
+            <tr>
+              <td>ℓ₂</td>
+              <td>0.268</td>
+              <td>0.357</td>
+              <td>0.375</td>
+              <td>0.28</td>
+            </tr>
+            <tr>
+              <td>ℓ₃</td>
+              <td>0.172</td>
+              <td>0.345</td>
+              <td>0.483</td>
+              <td>0.29</td>
+            </tr>
+            <tr>
+              <td>ℓ₄</td>
+              <td>0.109</td>
+              <td>0.435</td>
+              <td>0.456</td>
+              <td>0.23</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════════════════════════ 22.23 -->
+  <div class="full-width-section bg-alt" id="ex2223">
+    <div class="section reveal">
+      <div class="section-header">
+        <div class="section-num">22.23</div>
+        <div class="section-info">
+          <span class="section-tag">Posterior Probabilities</span>
+          <h2 class="section-title">Posterior Probabilities — High-Accuracy Indicators</h2>
+        </div>
+      </div>
+
+      <div class="problem-box">
+        Given: P(s₁) = 0.5, P(s₂) = 0.5<br><br>
+        Likelihood table (high-accuracy indicators):
+      </div>
+
+      <div class="table-wrap" style="max-width:360px;">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>ℓ₁</th>
+              <th>ℓ₂</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>S₁</td>
+              <td>0.98</td>
+              <td>0.02</td>
+            </tr>
+            <tr>
+              <td>S₂</td>
+              <td>0.05</td>
+              <td>0.95</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- For ℓ₁ -->
+      <div class="step-label">For ℓ₁</div>
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">P(ℓ₁)</span>= 0.5(0.98) + 0.5(0.05) = 0.49 + 0.025 =
+          <strong>0.515</strong>
+        </div>
+      </div>
+      <p style="color:rgba(245,237,216,0.7);font-size:0.9rem;margin:8px 0 4px;">Posterior probabilities:</p>
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">P(s₁ | ℓ₁)</span>= (0.5 × 0.98) / 0.515 = 0.49 / 0.515 =
+          <strong>0.951</strong>
+        </div>
+        <div class="calc-item"><span class="label">P(s₂ | ℓ₁)</span>= (0.5 × 0.05) / 0.515 = 0.025 / 0.515 =
+          <strong>0.049</strong>
+        </div>
+      </div>
+
+      <!-- For ℓ₂ -->
+      <div class="step-label">For ℓ₂</div>
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">P(ℓ₂)</span>= 0.5(0.02) + 0.5(0.95) = 0.01 + 0.475 =
+          <strong>0.485</strong>
+        </div>
+      </div>
+      <p style="color:rgba(245,237,216,0.7);font-size:0.9rem;margin:8px 0 4px;">Posterior probabilities:</p>
+      <div class="calc-list">
+        <div class="calc-item"><span class="label">P(s₁ | ℓ₂)</span>= (0.5 × 0.02) / 0.485 = 0.01 / 0.485 =
+          <strong>0.021</strong>
+        </div>
+        <div class="calc-item"><span class="label">P(s₂ | ℓ₂)</span>= (0.5 × 0.95) / 0.485 = 0.475 / 0.485 =
+          <strong>0.979</strong>
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div class="step-label">Summary — Posterior Probabilities</div>
+      <div class="table-wrap" style="max-width:480px;">
+        <table>
+          <thead>
+            <tr>
+              <th>Indicator</th>
+              <th>P(s₁ | ℓ)</th>
+              <th>P(s₂ | ℓ)</th>
+              <th>P(ℓ)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>ℓ₁</td>
+              <td class="highlight-cell">0.951</td>
+              <td>0.049</td>
+              <td>0.515</td>
+            </tr>
+            <tr>
+              <td>ℓ₂</td>
+              <td>0.021</td>
+              <td class="highlight-cell">0.979</td>
+              <td>0.485</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="conclusion"><span class="conclusion-icon">🔍</span>
+        <div class="conclusion-text">With highly accurate indicators (0.98, 0.95), the posterior probabilities are very
+          decisive — <strong>ℓ₁</strong> strongly suggests s₁ (95.1%), and <strong>ℓ₂</strong> strongly suggests s₂
+          (97.9%). This reflects how reliable indicators dramatically update prior beliefs.</div>
       </div>
     </div>
   </div>
